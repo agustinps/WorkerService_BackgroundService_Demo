@@ -17,12 +17,19 @@ namespace WorkerService_BackgroundService_Demo
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation("Volcando fichero a bb¡ase de datos a las : {time}", DateTimeOffset.Now);
                 await fileToDatabaseFakeService.Volcarfichero();
                 //Esperamos una hora antes de continuar.
-                await Task.Delay(3600000, stoppingToken);                
+                //await Task.Delay(3600000, stoppingToken);                
+                await Task.Delay(5000, stoppingToken);
             }
         }
-        
+
+        public override async Task StopAsync(CancellationToken stoppingToken)
+        {
+            _logger.LogInformation($"el servicio se ha detenido a las {DateTime.Now}.");
+            await base.StopAsync(stoppingToken);
+        }
+
     }
 }
